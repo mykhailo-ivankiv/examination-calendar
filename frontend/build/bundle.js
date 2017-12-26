@@ -6,9 +6,9 @@
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -32,9 +32,6 @@
 /******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// identity function for calling harmony imports with the correct context
-/******/ 	__webpack_require__.i = function(value) { return value; };
 /******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
@@ -63,81 +60,95 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 120);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 119:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_luxon__ = __webpack_require__(121);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_luxon___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_luxon__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BEM__ = __webpack_require__(340);
 
 
-const b = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__BEM__["a" /* default */])("Calendar");
+var _Calendar = __webpack_require__(1);
 
-const renderDay = (day) => {
-    const {start} = day;
-    const workDay = __WEBPACK_IMPORTED_MODULE_0_luxon__["Interval"]
-        .after(
-            start.set({hour: 10}),
-            {hours: 8}
-        )
-        .splitBy({hour: 1});
+var _Calendar2 = _interopRequireDefault(_Calendar);
 
-    const isWeekend = start.weekdayShort === "Sat" || start.weekdayShort === "Sun";
-    const dayEl = document.createElement("time");
-    dayEl
-        .className = b("day", {weekend: isWeekend});
+var _User = __webpack_require__(4);
 
-    dayEl.innerHTML += `
-        <span class="${b("title")}">
-            ${start.toLocaleString({
-                weekday: "short",
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-            })}
-        </span>`;
+var _User2 = _interopRequireDefault(_User);
 
-    if (!isWeekend) {
-        dayEl.innerHTML += workDay.map(hour => `<div class="Hour">${hour.start.toLocaleString(__WEBPACK_IMPORTED_MODULE_0_luxon__["DateTime"].TIME_24_SIMPLE)}</div>`).join("");
-    }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-    return dayEl;
+new _Calendar2.default(document.querySelector("#calendar"));
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _luxon = __webpack_require__(2);
+
+var _BEM = __webpack_require__(3);
+
+var _BEM2 = _interopRequireDefault(_BEM);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var b = (0, _BEM2.default)("Calendar");
+
+var Calendar = function Calendar(container) {
+    var _this = this;
+
+    _classCallCheck(this, Calendar);
+
+    this.renderDay = function (day) {
+        var start = day.start;
+
+        var workDay = _luxon.Interval.after(start.set({ hour: 10 }), { hours: 8 }).splitBy({ hour: 1 });
+
+        var isWeekend = start.weekdayShort === "Sat" || start.weekdayShort === "Sun";
+        var dayEl = document.createElement("time");
+        dayEl.className = b("day", { weekend: isWeekend });
+
+        dayEl.innerHTML += "\n        <span class=\"" + b("title") + "\">\n            " + start.toLocaleString({
+            weekday: "short",
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }) + "\n        </span>";
+
+        if (!isWeekend) {
+            dayEl.innerHTML += workDay.map(_this.renderHour).join("");
+        }
+
+        return dayEl;
+    };
+
+    this.renderHour = function (hour) {
+        return "<div class=\"Hour\">" + hour.start.toLocaleString(_luxon.DateTime.TIME_24_SIMPLE) + "</div>";
+    };
+
+    var from = _luxon.DateTime.local(2017, 12, 25);
+    var to = _luxon.DateTime.local(2018, 2, 1);
+
+    _luxon.Interval.fromDateTimes(from, to).splitBy({ days: 1 }).map(this.renderDay).forEach(function (dayEl) {
+        container.append(dayEl);
+    });
 };
 
-const from = __WEBPACK_IMPORTED_MODULE_0_luxon__["DateTime"].local(2017, 12, 25);
-const to = __WEBPACK_IMPORTED_MODULE_0_luxon__["DateTime"].local(2018, 2, 1);
-
-
-
-__WEBPACK_IMPORTED_MODULE_0_luxon__["Interval"]
-    .fromDateTimes(from, to)
-    .splitBy({days: 1})
-    .map (renderDay)
-    .forEach( dayEl => {
-        document
-            .querySelector("#calendar")
-            .append(dayEl);
-    });
+exports.default = Calendar;
 
 /***/ }),
-
-/***/ 120:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Calendar__ = __webpack_require__(119);
-
-
-/***/ }),
-
-/***/ 121:
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7328,38 +7339,66 @@ exports.Settings = Settings;
 
 
 /***/ }),
-
-/***/ 340:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-const ELEMENT_SEPARATOR = "__",
-  MODIFIER_SEPARATOR = "_"
 
-function getBEMPAth({b, e, m}) {
-  const base = e  ? [b, e].join(ELEMENT_SEPARATOR) : b
 
-  return [
-      base,
-      ...m.map(modifier => [base , modifier].join(MODIFIER_SEPARATOR))
-    ].join(" ")
-    .trim()
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var ELEMENT_SEPARATOR = "__",
+    MODIFIER_SEPARATOR = "_";
+
+function getBEMPAth(_ref) {
+  var b = _ref.b,
+      e = _ref.e,
+      m = _ref.m;
+
+  var base = e ? [b, e].join(ELEMENT_SEPARATOR) : b;
+
+  return [base].concat(_toConsumableArray(m.map(function (modifier) {
+    return [base, modifier].join(MODIFIER_SEPARATOR);
+  }))).join(" ").trim();
 }
 
-const b = (b) => (elementName, modifiers = {}) => {
-    let e, m
+var b = function b(_b) {
+  return function (elementName) {
+    var modifiers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-    if (typeof elementName === "string") { e = elementName}
-    else { modifiers = elementName || {} }
+    var e = void 0,
+        m = void 0;
 
-    if (Array.isArray(modifiers)) { m = modifiers}
-    else { m = Object.keys(modifiers).filter((modifier) => modifiers[modifier]) || [] }
+    if (typeof elementName === "string") {
+      e = elementName;
+    } else {
+      modifiers = elementName || {};
+    }
 
-    return getBEMPAth({b, e, m})
-  }
+    if (Array.isArray(modifiers)) {
+      m = modifiers;
+    } else {
+      m = Object.keys(modifiers).filter(function (modifier) {
+        return modifiers[modifier];
+      }) || [];
+    }
 
-/* harmony default export */ __webpack_exports__["a"] = (b);
+    return getBEMPAth({ b: _b, e: e, m: m });
+  };
+};
+
+exports.default = b;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 /***/ })
-
-/******/ });
+/******/ ]);
