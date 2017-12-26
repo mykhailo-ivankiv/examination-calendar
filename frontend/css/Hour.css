@@ -1,0 +1,10 @@
+.Hour {
+    height: 44px;
+    width: 45px;
+    display: inline-block;
+    border-left: 1px solid #ccc;
+    margin: 5px 2px;
+    padding: 3px;
+    font-size: 13px;
+    color: #333;
+}

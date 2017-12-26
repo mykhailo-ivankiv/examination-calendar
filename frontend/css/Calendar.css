@@ -1,3 +1,21 @@
 .Calendar {
 
 }
+
+.Calendar__day {
+    display: block;
+    margin: auto;
+    overflow: hidden;
+}
+
+.Calendar__day_weekend {
+    color: red;
+    height: 30px;
+}
+
+.Calendar__title {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    width: 150px;
+}
