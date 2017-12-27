@@ -1,0 +1,14 @@
+.User {
+    height: 30px;
+    position: absolute;
+    right: 20px;
+    top: 27px;
+
+}
+
+.User__avatar {
+    height: 30px;
+    width: 30px;
+    background: #cccccc;
+    border-radius: 100%;
+}
