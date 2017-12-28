@@ -1,10 +1,19 @@
 .Hour {
-    height: 44px;
-    width: 45px;
+    height: 57px;
+    width: calc(100%/8 - 4px);
     display: inline-block;
     border-left: 1px solid #ccc;
-    margin: 5px 2px;
     padding: 3px;
-    font-size: 13px;
     color: #333;
+    vertical-align: middle;
+    box-sizing: border-box;
+    font-size: 11px;
+}
+
+.Hour_reserved {
+    background: #e67e22;
+    color: #ecf0f1;
+}
+.Hour__time {
+    display: block;
 }

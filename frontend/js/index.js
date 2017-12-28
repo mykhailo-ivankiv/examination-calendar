@@ -3,9 +3,14 @@ import ReactDOM from "react-dom";
 import Calendar from "./Calendar";
 import User from "./User"
 
-new Calendar(document.querySelector("#calendar"));
+// new Calendar(document.querySelector("#calendar"));
+
+// ReactDOM.render(
+//     <User name="Taylor" />,
+//     document.querySelector("#user")
+// );
 
 ReactDOM.render(
-    <User name="Taylor" />,
-    document.querySelector("#user")
+    <Calendar />,
+    document.querySelector("#calendar")
 );

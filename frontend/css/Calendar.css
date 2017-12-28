@@ -14,8 +14,9 @@
 }
 
 .Calendar__title {
-    display: inline-block;
+    display: block;
     font-size: 12px;
     font-weight: 600;
     width: 150px;
+    margin-top: 15px;
 }

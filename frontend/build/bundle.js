@@ -984,9 +984,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-new __WEBPACK_IMPORTED_MODULE_2__Calendar__["a" /* default */](document.querySelector("#calendar"));
+// new Calendar(document.querySelector("#calendar"));
 
-__WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__User__["a" /* default */], { name: "Taylor" }), document.querySelector("#user"));
+// ReactDOM.render(
+//     <User name="Taylor" />,
+//     document.querySelector("#user")
+// );
+
+__WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Calendar__["a" /* default */], null), document.querySelector("#calendar"));
 
 /***/ }),
 /* 16 */
@@ -18301,52 +18306,96 @@ module.exports = camelize;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_luxon__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_luxon___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_luxon__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BEM__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_luxon__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_luxon___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_luxon__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__BEM__ = __webpack_require__(14);
 
 
-const b = Object(__WEBPACK_IMPORTED_MODULE_1__BEM__["a" /* default */])("Calendar");
 
-class Calendar {
-  constructor(container) {
-    this.renderDay = day => {
-      const { start } = day;
-      const workDay = __WEBPACK_IMPORTED_MODULE_0_luxon__["Interval"].after(start.set({ hour: 10 }), {
-        hours: 8
-      }).splitBy({ hour: 1 });
+const b = Object(__WEBPACK_IMPORTED_MODULE_2__BEM__["a" /* default */])("Calendar");
 
-      const isWeekend = start.weekdayShort === "Sat" || start.weekdayShort === "Sun";
-      const dayEl = document.createElement("time");
-      dayEl.className = b("day", { weekend: isWeekend });
+class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
+  constructor(props) {
+    super(props);
+    this.holidays = [
+    // Interval.after(DateTime.local(2018, 1, 5), { day: 1 }),
+    __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 6), { day: 1 }), __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 7), { day: 1 }), __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 14), { day: 1 })];
+    this.reserved = [{
+      student: "Laba Yuriy",
+      time: __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 1, 11), { hour: 1 })
+    }, {
+      student: "Orest Rehusevych",
+      time: __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2017, 12, 29, 14), { hour: 1 })
+    }, {
+      student: "Pankiv Andriy",
+      time: __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2017, 12, 29, 15), { hour: 1 })
+    }, {
+      student: "Serhii Dubovyk",
+      time: __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 2, 10), { hour: 1 })
+    }, {
+      student: "Nina Bondar",
+      time: __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 2, 12), { hour: 1 })
+    }];
+    const from = __WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2017, 12, 28);
+    const to = __WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 18);
 
-      dayEl.innerHTML += `
-        <span class="${b("title")}">
-            ${start.toLocaleString({
-        weekday: "short",
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-      })}
-        </span>`;
-
-      if (!isWeekend) {
-        dayEl.innerHTML += workDay.map(this.renderHour).join("");
-      }
-
-      return dayEl;
-    };
-
-    this.renderHour = hour => `<div class="Hour">${hour.start.toLocaleString(__WEBPACK_IMPORTED_MODULE_0_luxon__["DateTime"].TIME_24_SIMPLE)}</div>`;
-
-    const from = __WEBPACK_IMPORTED_MODULE_0_luxon__["DateTime"].local(2017, 12, 25);
-    const to = __WEBPACK_IMPORTED_MODULE_0_luxon__["DateTime"].local(2018, 2, 1);
-
-    __WEBPACK_IMPORTED_MODULE_0_luxon__["Interval"].fromDateTimes(from, to).splitBy({ days: 1 }).map(this.renderDay).forEach(dayEl => {
-      container.append(dayEl);
-    });
+    const interval = __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].fromDateTimes(from, to).splitBy({ days: 1 });
+    this.state = { from, to, interval };
   }
 
+  render() {
+    const { interval } = this.state;
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      "div",
+      null,
+      interval.map(this.renderDay.bind(this))
+    );
+  }
+
+  renderHour(hour) {
+    const reservation = this.reserved.find(({ time }) => time.equals(hour));
+    const className = reservation ? "Hour Hour_reserved" : "Hour";
+
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      "div",
+      { className: className },
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "span",
+        { className: "Hour__time" },
+        hour.start.toLocaleString(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].TIME_24_SIMPLE)
+      ),
+      reservation ? reservation.student : ""
+    );
+  }
+
+  renderDay(day) {
+    const { start } = day;
+    const workDay = __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(start.set({ hour: 10 }), {
+      hours: 8
+    }).splitBy({ hour: 1 });
+
+    const isWeekend = start.weekdayShort === "Sat" || start.weekdayShort === "Sun";
+
+    const isHoliday = this.holidays.some(holiday => holiday.equals(day));
+
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      "time",
+      { className: b("day", { weekend: isWeekend || isHoliday }) },
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "span",
+        { className: b("title") },
+        start.toLocaleString({
+          weekday: "short",
+          day: "numeric",
+          month: "long",
+          year: "numeric"
+        })
+      ),
+      !isWeekend && !isHoliday && workDay.map(this.renderHour.bind(this))
+    );
+  }
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Calendar);
@@ -25602,7 +25651,7 @@ class User extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
   }
 }
 
-/* harmony default export */ __webpack_exports__["a"] = (User);
+/* unused harmony default export */ var _unused_webpack_default_export = (User);
 
 class _User {
 

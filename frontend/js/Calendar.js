@@ -1,21 +1,38 @@
+import React, { Component } from "react";
 import { DateTime, Interval } from "luxon";
 import BEM from "./BEM";
 const b = BEM("Calendar");
 
-class Calendar {
-  constructor(container) {
-    const from = DateTime.local(2017, 12, 25);
-    const to = DateTime.local(2018, 2, 1);
+class Calendar extends Component {
+  constructor(props) {
+    super(props);
+    const from = DateTime.local(2017, 12, 28);
+    const to = DateTime.local(2018, 1, 18);
 
-    Interval.fromDateTimes(from, to)
-      .splitBy({ days: 1 })
-      .map(this.renderDay)
-      .forEach(dayEl => {
-        container.append(dayEl);
-      });
+    const interval = Interval.fromDateTimes(from, to).splitBy({ days: 1 });
+    this.state = { from, to, interval };
   }
 
-  renderDay = day => {
+  render() {
+    const { interval } = this.state;
+    return <div>{interval.map(this.renderDay.bind(this))}</div>;
+  }
+
+  renderHour(hour) {
+    const reservation = this.reserved.find(({ time }) => time.equals(hour));
+    const className = reservation ? "Hour Hour_reserved" : "Hour";
+
+    return (
+      <div className={className}>
+        <span className="Hour__time">
+          {hour.start.toLocaleString(DateTime.TIME_24_SIMPLE)}
+        </span>
+        {reservation ? reservation.student : ""}
+      </div>
+    );
+  }
+
+  renderDay (day) {
     const { start } = day;
     const workDay = Interval.after(start.set({ hour: 10 }), {
       hours: 8
@@ -23,30 +40,53 @@ class Calendar {
 
     const isWeekend =
       start.weekdayShort === "Sat" || start.weekdayShort === "Sun";
-    const dayEl = document.createElement("time");
-    dayEl.className = b("day", { weekend: isWeekend });
 
-    dayEl.innerHTML += `
-        <span class="${b("title")}">
-            ${start.toLocaleString({
-              weekday: "short",
-              day: "numeric",
-              month: "long",
-              year: "numeric"
-            })}
-        </span>`;
+    const isHoliday = this.holidays.some(holiday => holiday.equals(day));
 
-    if (!isWeekend) {
-      dayEl.innerHTML += workDay.map(this.renderHour).join("");
-    }
-
-    return dayEl;
+    return (
+      <time className={b("day", { weekend: isWeekend || isHoliday })}>
+        <span className={b("title")}>
+          {start.toLocaleString({
+            weekday: "short",
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+          })}
+        </span>
+        {!isWeekend && !isHoliday && workDay.map(this.renderHour.bind(this))}
+      </time>
+    );
   };
 
-  renderHour = hour =>
-    `<div class="Hour">${hour.start.toLocaleString(
-      DateTime.TIME_24_SIMPLE
-    )}</div>`;
+  holidays = [
+    // Interval.after(DateTime.local(2018, 1, 5), { day: 1 }),
+    Interval.after(DateTime.local(2018, 1, 6), { day: 1 }),
+    Interval.after(DateTime.local(2018, 1, 7), { day: 1 }),
+    Interval.after(DateTime.local(2018, 1, 14), { day: 1 })
+  ];
+
+  reserved = [
+    {
+      student: "Laba Yuriy",
+      time: Interval.after(DateTime.local(2018, 1, 1, 11), { hour: 1 })
+    },
+    {
+      student: "Orest Rehusevych",
+      time: Interval.after(DateTime.local(2017, 12, 29, 14), { hour: 1 })
+    },
+    {
+      student: "Pankiv Andriy",
+      time: Interval.after(DateTime.local(2017, 12, 29, 15), { hour: 1 })
+    },
+    {
+      student: "Serhii Dubovyk",
+      time: Interval.after(DateTime.local(2018, 1, 2, 10), { hour: 1 })
+    },
+      {
+          student: "Nina Bondar",
+          time: Interval.after(DateTime.local(2018, 1, 2, 12), { hour: 1 })
+      }
+  ];
 }
 
 export default Calendar;
