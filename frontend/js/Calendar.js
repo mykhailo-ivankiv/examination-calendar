@@ -113,6 +113,10 @@ class Calendar extends Component {
     {
         student: "Pankiv Andriy",
         time: Interval.after(DateTime.local(2018, 1, 3, 14), { hour: 1 })
+    },
+    {
+        student: "Maria Dobko",
+        time: Interval.after(DateTime.local(2018, 1, 8, 12), { hour: 1 })
     }
   ];
 }
