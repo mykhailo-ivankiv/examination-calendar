@@ -18319,6 +18319,7 @@ const b = Object(__WEBPACK_IMPORTED_MODULE_2__BEM__["a" /* default */])("Calenda
 class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
   constructor(props) {
     super(props);
+
     this.holidays = [
     // Interval.after(DateTime.local(2018, 1, 5), { day: 1 }),
     __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 6), { day: 1 }), __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 7), { day: 1 }), __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 14), { day: 1 })];
@@ -18335,8 +18336,20 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       student: "Serhii Dubovyk",
       time: __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 2, 10), { hour: 1 })
     }, {
+      student: "Mohylevska Kateryna",
+      time: __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2017, 12, 29, 11), { hour: 1 })
+    }, {
       student: "Nina Bondar",
       time: __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 2, 12), { hour: 1 })
+    }, {
+      student: "Vladyslav Velychko",
+      time: __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 2, 14), { hour: 1 })
+    }, {
+      student: "Arsen Senkivskyy",
+      time: __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 3, 13), { hour: 1 })
+    }, {
+      student: "Maryana Mysak",
+      time: __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 3, 12), { hour: 1 })
     }];
     const from = __WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2017, 12, 28);
     const to = __WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 18);
@@ -18354,19 +18367,26 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     );
   }
 
+  openScheduler(hour) {
+    console.log(hour.toLocaleString());
+  }
+
   renderHour(hour) {
     const reservation = this.reserved.find(({ time }) => time.equals(hour));
     const className = reservation ? "Hour Hour_reserved" : "Hour";
 
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       "div",
-      { className: className },
+      {
+        className: className,
+        onClick: !reservation && this.openScheduler.bind(this, hour)
+      },
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "span",
         { className: "Hour__time" },
         hour.start.toLocaleString(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].TIME_24_SIMPLE)
       ),
-      reservation ? reservation.student : ""
+      reservation && reservation.student
     );
   }
 
@@ -18396,6 +18416,7 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       !isWeekend && !isHoliday && workDay.map(this.renderHour.bind(this))
     );
   }
+
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Calendar);

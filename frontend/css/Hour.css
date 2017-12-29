@@ -2,17 +2,19 @@
     height: 57px;
     width: calc(100%/8 - 4px);
     display: inline-block;
-    border-left: 1px solid #ccc;
     padding: 3px;
     color: #333;
     vertical-align: middle;
     box-sizing: border-box;
     font-size: 11px;
+    margin-top: 4px;
+    border-top: 3px solid transparent;
+    margin-left: 2px;
 }
 
 .Hour_reserved {
-    background: #e67e22;
-    color: #ecf0f1;
+    color: #34495e;
+    border-top: 3px solid #1abc9c;
 }
 .Hour__time {
     display: block;

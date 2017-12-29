@@ -6,6 +6,7 @@ const b = BEM("Calendar");
 class Calendar extends Component {
   constructor(props) {
     super(props);
+
     const from = DateTime.local(2017, 12, 28);
     const to = DateTime.local(2018, 1, 18);
 
@@ -18,21 +19,28 @@ class Calendar extends Component {
     return <div>{interval.map(this.renderDay.bind(this))}</div>;
   }
 
+  openScheduler(hour) {
+    console.log(hour.toLocaleString());
+  }
+
   renderHour(hour) {
     const reservation = this.reserved.find(({ time }) => time.equals(hour));
     const className = reservation ? "Hour Hour_reserved" : "Hour";
 
     return (
-      <div className={className}>
+      <div
+        className={className}
+        onClick={!reservation && this.openScheduler.bind(this, hour)}
+      >
         <span className="Hour__time">
           {hour.start.toLocaleString(DateTime.TIME_24_SIMPLE)}
         </span>
-        {reservation ? reservation.student : ""}
+        {reservation && reservation.student}
       </div>
     );
   }
 
-  renderDay (day) {
+  renderDay(day) {
     const { start } = day;
     const workDay = Interval.after(start.set({ hour: 10 }), {
       hours: 8
@@ -56,7 +64,7 @@ class Calendar extends Component {
         {!isWeekend && !isHoliday && workDay.map(this.renderHour.bind(this))}
       </time>
     );
-  };
+  }
 
   holidays = [
     // Interval.after(DateTime.local(2018, 1, 5), { day: 1 }),
@@ -82,10 +90,26 @@ class Calendar extends Component {
       student: "Serhii Dubovyk",
       time: Interval.after(DateTime.local(2018, 1, 2, 10), { hour: 1 })
     },
-      {
-          student: "Nina Bondar",
-          time: Interval.after(DateTime.local(2018, 1, 2, 12), { hour: 1 })
-      }
+    {
+      student: "Mohylevska Kateryna",
+      time: Interval.after(DateTime.local(2017, 12, 29, 11), { hour: 1 })
+    },
+    {
+      student: "Nina Bondar",
+      time: Interval.after(DateTime.local(2018, 1, 2, 12), { hour: 1 })
+    },
+    {
+      student: "Vladyslav Velychko",
+      time: Interval.after(DateTime.local(2018, 1, 2, 14), { hour: 1 })
+    },
+    {
+      student: "Arsen Senkivskyy",
+      time: Interval.after(DateTime.local(2018, 1, 3, 13), { hour: 1 })
+    },
+    {
+      student: "Maryana Mysak",
+      time: Interval.after(DateTime.local(2018, 1, 3, 12), { hour: 1 })
+    }
   ];
 }
 

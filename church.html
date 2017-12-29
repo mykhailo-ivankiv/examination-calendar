@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            height: 100vh;
+        }
+        .Church {
+            margin: auto;
+            height: 400px;
+            width: 400px;
+            border: 3px solid blue;
+            display: flex;
+            position: relative;
+        }
+
+        .Church__people-section {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+        }
+        .Church__priest-section {
+            position: absolute;
+            left: 70%;
+            top: 0;
+            bottom: 0;
+            width: 30%;
+            display: flex;
+            flex-direction: row;
+        }
+
+
+        .Church__people {
+            height: 20px;
+            width: 20px;
+            background: gray;
+            border-radius: 100%;
+            margin: auto;
+            position: relative;
+        }
+
+        .Church__people_priest {
+            background: gold;
+        }
+        .Church__people_satan {
+            position: absolute;
+            left: -30px;
+            background: red;
+        }
+        .Church__people-name {
+            position: absolute;
+            left: 20px;
+            top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="Church"></div>
+
+    <script>
+        const people = [
+            {
+                name: "A",
+                status: "priest",
+            },
+            {
+                name: "A",
+                status: "priest",
+            },
+            {
+                name: "A",
+                status: "satan",
+            },
+            {
+                name: "A",
+                status: "satan",
+            },
+            {
+                name: "A",
+                status: "satan",
+            },
+            {
+                name: "A",
+                status: "satan",
+            },
+            {
+                name: "B"
+            },
+            {
+                name: "B"
+            },
+            {
+                name: "B"
+            }
+
+        ];
+
+        function random(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+        }
+
+        const getPersonClass = (person) => {
+            switch  (person.status) {
+                case "priest": return "Church__people_priest";
+                case "satan": return "Church__people_satan";
+                default: return ""
+            }
+        };
+
+        const getPersonStyle = (person) => {
+            switch  (person.status) {
+                // case "priest": return "Church__people_priest";
+                case "satan": return `left: -${random(0,50)}%; top:${random(0, 100)}%`;
+                default: return ""
+            }
+        }
+
+        const renderPerson = (person) => `
+                <div
+                    class="Church__people ${getPersonClass(person)}"
+                    style = "${getPersonStyle(person)}"
+                >
+                    <div class="Church__people-name">${person.name}</div>
+                </div>
+            `
+
+        const satanEl = people
+            .filter(person => person.status === "satan")
+            .map( renderPerson )
+            .join("");
+
+        const priestEl = people
+            .filter(person => person.status === "priest")
+            .map(renderPerson)
+            .join("");
+
+        const peopleEl = people
+            .filter(person => person.status === undefined)
+            .map(renderPerson)
+            .join("")
+
+
+        document.querySelector(".Church").innerHTML = `
+            ${satanEl}
+            <div class="Church__people-section">${peopleEl}</div>
+            <div class="Church__priest-section">${priestEl}</div>
+        `
+        ;
+        document.querySelector(".Church")
+            .addEventListener("click", (ev) => {
+                if (ev.target.matches(".Church__people")) {
+                    ev.target.remove();
+                }
+
+            })
+
+    </script>
+</body>
+</html>
