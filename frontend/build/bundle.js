@@ -18350,6 +18350,9 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     }, {
       student: "Maryana Mysak",
       time: __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 3, 12), { hour: 1 })
+    }, {
+      student: "Pankiv Andriy",
+      time: __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 3, 14), { hour: 1 })
     }];
     const from = __WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2017, 12, 28);
     const to = __WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 18);
