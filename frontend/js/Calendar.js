@@ -115,7 +115,7 @@ class Calendar extends Component {
   reserved = [
     {
       student: "Laba Yuriy",
-      time: Interval.after(DateTime.local(2018, 1, 1, 11), { hour: 1 })
+      time: Interval.after(DateTime.local(2018, 1, 2, 11), { hour: 1 })
     },
     {
       student: "Orest Rehusevych",
@@ -164,7 +164,12 @@ class Calendar extends Component {
     {
         student: "Skibinska Olena",
         time: Interval.after(DateTime.local(2018, 1, 1, 12), { hour: 1 })
-    }
+    },
+    {
+        student: "Natalija Paranyak",
+        time: Interval.after(DateTime.local(2018, 1, 4, 15), { hour: 1 })
+    },
+
   ];
 }
 export default Calendar;
