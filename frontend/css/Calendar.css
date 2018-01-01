@@ -1,22 +1,26 @@
 .Calendar {
-
 }
 
 .Calendar__day {
-    display: block;
-    margin: auto;
-    overflow: hidden;
+  display: block;
+  margin: auto;
+  overflow: hidden;
+}
+.Calendar__day:nth-child(1) {
+  position: sticky;
+  top: 0;
+  background: white;
 }
 
 .Calendar__day_weekend {
-    color: red;
-    height: 30px;
+  color: red;
+  height: 30px;
 }
 
 .Calendar__title {
-    display: block;
-    font-size: 12px;
-    font-weight: 600;
-    width: 150px;
-    margin-top: 15px;
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  width: 150px;
+  margin-top: 15px;
 }

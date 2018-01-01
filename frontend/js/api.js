@@ -1,3 +1,4 @@
+import { Interval, DateTime } from "luxon";
 class API {
   access_token = localStorage.getItem("access_token");
   client_id = "c248798633e9dcc6d002";
@@ -54,7 +55,7 @@ class API {
       mode: "cors"
     })).json();
 
-    localStorage.setItem("user", JSON.stringify(user))
+    localStorage.setItem("user", JSON.stringify(user));
     return user;
   }
 
@@ -67,6 +68,21 @@ class API {
     if (this.access_token || this.code) {
       this.authenticate();
     }
+  }
+
+  async getStudents() {
+    return await (await fetch("/api/students")).json();
+  }
+
+  async getSchedule() {
+    const schedule = await (await fetch("/api/schedule")).json();
+    return schedule.map(({ studentId, time }) => ({
+      studentId,
+      time: Interval.fromDateTimes(
+          DateTime.fromISO(time.start),
+          DateTime.fromISO(time.end),
+      )
+    }));
   }
 }
 
