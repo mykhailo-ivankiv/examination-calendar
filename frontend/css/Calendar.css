@@ -4,12 +4,13 @@
 .Calendar__day {
   display: block;
   margin: auto;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 .Calendar__day:nth-child(1) {
   position: sticky;
   top: 0;
   background: white;
+  z-index: 1;
 }
 
 .Calendar__day_weekend {

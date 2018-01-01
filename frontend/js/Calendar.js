@@ -1,7 +1,8 @@
-import Select from "react-select";
 import React, { Component } from "react";
 import { DateTime, Interval } from "luxon";
 import api from "./api";
+
+import Hour from "./Hour";
 
 import "../css/Calendar.css";
 import BEM from "./BEM";
@@ -36,35 +37,17 @@ class Calendar extends Component {
       api.getSchedule()
     ]);
 
-    console.log("studentId", students);
-
     this.setState({ students, schedule });
   }
+
   render() {
     const { interval } = this.state;
     return <div>{interval.map(this.renderDay.bind(this))}</div>;
   }
 
-  renderHour(hour) {
-    const { schedule, students } = this.state;
-
-    const reservation = schedule.find(({ time }) => time.equals(hour));
-    const className = reservation ? "Hour Hour_reserved" : "Hour";
-
-    return (
-      <div className={className}>
-        <span className="Hour__time">
-          {hour.start.toLocaleString(DateTime.TIME_24_SIMPLE)}
-        </span>
-        {reservation &&
-          reservation.studentId &&
-          students[reservation.studentId].name}
-      </div>
-    );
-  }
-
   renderDay(day) {
     const { start } = day;
+    const { schedule, students } = this.state;
     const workDay = Interval.after(start.set({ hour: 10 }), {
       hours: 8
     }).splitBy({ hour: 1 });
@@ -76,20 +59,21 @@ class Calendar extends Component {
 
     return (
       <time className={b("day", { weekend: isWeekend || isHoliday })}>
-        {/*<Select*/}
-        {/*options={students.map(({ id, name }) => ({ value: id, label: name }))}*/}
-        {/*/>*/}
         <span className={b("title")}>
-          {start.toLocaleString({
-            weekday: "short",
-            day: "numeric",
-            month: "long",
-            year: "numeric"
-          })}
+          {start.toLocaleString(this.TIME_FORMATTER)}
         </span>
-        {!isWeekend && !isHoliday && workDay.map(this.renderHour.bind(this))}
+        {!isWeekend &&
+          !isHoliday &&
+          workDay.map(hour => <Hour {...{ hour, schedule, students }} />)}
       </time>
     );
+  }
+
+  TIME_FORMATTER = {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    // year: "numeric"
   }
 
   holidays = [

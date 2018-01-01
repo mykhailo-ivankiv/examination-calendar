@@ -1,21 +1,54 @@
 .Hour {
-    height: 57px;
-    width: calc(100%/8 - 4px);
-    display: inline-block;
-    padding: 3px;
-    color: #333;
-    vertical-align: middle;
-    box-sizing: border-box;
-    font-size: 11px;
-    margin-top: 4px;
-    border-top: 3px solid transparent;
-    margin-left: 2px;
+  height: 57px;
+  width: calc(100%/8 - 4px);
+  display: inline-block;
+  padding: 3px;
+  color: #333;
+  vertical-align: middle;
+  box-sizing: border-box;
+  font-size: 11px;
+  margin-top: 4px;
+  border-top: 3px solid transparent;
+  margin-left: 2px;
 }
 
 .Hour_reserved {
-    color: #34495e;
-    border-top: 3px solid #1abc9c;
+  color: #34495e;
+  border-top: 3px solid #1abc9c;
 }
 .Hour__time {
-    display: block;
+  display: block;
+}
+
+.Select-arrow-zone {
+  display: none;
+}
+.Select-control {
+  border: none;
+  margin-left: -10px;
+}
+
+.Select-value {
+  left: 0 !important;
+  right: -27px !important;
+  max-width: none !important;
+
+  line-height: 1.3em !important;
+  overflow: visible !important;
+  white-space: normal !important;
+}
+.Select-clear-zone {
+  position: absolute;
+  top: -2px;
+  right: 0;
+}
+
+.Select-input {
+  height: 1.3em;
+}
+
+.Select-input > input {
+  height: 1.3em;
+  line-height: 1.3em;
+  padding: 0;
 }
