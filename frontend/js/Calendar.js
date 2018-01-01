@@ -40,9 +40,18 @@ class Calendar extends Component {
     this.setState({ students, schedule });
   }
 
+  saveSchedule = () => {
+    api.setSchedule(this.state.schedule);
+  }
+
   render() {
     const { interval } = this.state;
-    return <div>{interval.map(this.renderDay.bind(this))}</div>;
+    return (
+      <div>
+        <button onClick={this.saveSchedule}>save</button>
+        {interval.map(this.renderDay.bind(this))}
+      </div>
+    );
   }
   changeSchedule(hour, user) {
     const { schedule } = this.state;

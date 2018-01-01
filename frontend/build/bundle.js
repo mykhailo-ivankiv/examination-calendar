@@ -8757,6 +8757,24 @@ class API {
     return await (await fetch("/api/students")).json();
   }
 
+  async setSchedule(newSchedule) {
+
+    let body = JSON.stringify(newSchedule.map(({ studentId, time: { start, end } }) => ({
+      studentId,
+      time: {
+        start,
+        end
+      }
+    })));
+
+    await fetch("/api/schedule", {
+      headers: {
+        "Content-type": "application/json"
+      },
+      method: "POST",
+      body
+    });
+  }
   async getSchedule() {
     const schedule = await (await fetch("/api/schedule")).json();
     return schedule.map(({ studentId, time }) => ({
@@ -26103,6 +26121,11 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     super(props);
 
     // const from = DateTime.local(2017, 12, 28);
+
+    this.saveSchedule = () => {
+      __WEBPACK_IMPORTED_MODULE_2__api__["a" /* default */].setSchedule(this.state.schedule);
+    };
+
     this.TIME_FORMATTER = {
       weekday: "short",
       day: "numeric",
@@ -26139,6 +26162,11 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       "div",
       null,
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "button",
+        { onClick: this.saveSchedule },
+        "save"
+      ),
       interval.map(this.renderDay.bind(this))
     );
   }

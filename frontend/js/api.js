@@ -74,13 +74,33 @@ class API {
     return await (await fetch("/api/students")).json();
   }
 
+  async setSchedule(newSchedule) {
+
+    let body = JSON.stringify(
+      newSchedule.map(({ studentId, time: { start, end } }) => ({
+        studentId,
+        time: {
+          start,
+          end
+        }
+      }))
+    );
+
+    await fetch("/api/schedule", {
+      headers: {
+        "Content-type": "application/json"
+      },
+      method: "POST",
+      body
+    });
+  }
   async getSchedule() {
     const schedule = await (await fetch("/api/schedule")).json();
     return schedule.map(({ studentId, time }) => ({
       studentId,
       time: Interval.fromDateTimes(
-          DateTime.fromISO(time.start),
-          DateTime.fromISO(time.end),
+        DateTime.fromISO(time.start),
+        DateTime.fromISO(time.end)
       )
     }));
   }
