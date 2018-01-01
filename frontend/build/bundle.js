@@ -26086,6 +26086,8 @@ module.exports = camelize;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__css_Calendar_css__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__css_Calendar_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__css_Calendar_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__BEM__ = __webpack_require__(12);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 
 
 
@@ -26140,8 +26142,29 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       interval.map(this.renderDay.bind(this))
     );
   }
+  changeSchedule(hour, user) {
+    const { schedule } = this.state;
+    let newSchedule;
 
-  renderDay(day) {
+    if (!user) {
+      newSchedule = schedule.filter(({ time }) => !time.overlaps(hour));
+    } else {
+      let existedEvent = schedule.find(({ time }) => time.overlaps(hour));
+
+      if (user && existedEvent) {
+        newSchedule = schedule.filter(({ time }) => !time.overlaps(hour));
+        newSchedule.push(Object.assign(existedEvent, { studentId: user.value }));
+      } else {
+        newSchedule = [...schedule, {
+          studentId: user.value,
+          time: hour
+        }];
+      }
+    }
+
+    this.setState({ schedule: newSchedule });
+  }
+  renderDay(day, i) {
     const { start } = day;
     const { schedule, students } = this.state;
     const workDay = __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(start.set({ hour: 10 }), {
@@ -26154,13 +26177,16 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
 
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       "time",
-      { className: b("day", { weekend: isWeekend || isHoliday }) },
+      { key: i, className: b("day", { weekend: isWeekend || isHoliday }) },
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "span",
         { className: b("title") },
         start.toLocaleString(this.TIME_FORMATTER)
       ),
-      !isWeekend && !isHoliday && workDay.map(hour => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Hour__["a" /* default */], { hour, schedule, students }))
+      !isWeekend && !isHoliday && workDay.map(hour => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Hour__["a" /* default */], _extends({
+        key: hour,
+        onChange: this.changeSchedule.bind(this, hour)
+      }, { hour, schedule, students })))
     );
   }
 
@@ -26197,8 +26223,8 @@ class Hour extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     super(props);
 
     this.handleChange = selectedOption => {
-      this.setState({ selectedOption });
-      console.log(selectedOption);
+      const { onChange } = this.props;
+      onChange && onChange(selectedOption);
     };
 
     this.state = {
@@ -29955,7 +29981,7 @@ exports = module.exports = __webpack_require__(10)(undefined);
 
 
 // module
-exports.push([module.i, ".Hour {\n  height: 57px;\n  width: calc(100%/8 - 4px);\n  display: inline-block;\n  padding: 3px;\n  color: #333;\n  vertical-align: middle;\n  box-sizing: border-box;\n  font-size: 11px;\n  margin-top: 4px;\n  border-top: 3px solid transparent;\n  margin-left: 2px;\n}\n\n.Hour_reserved {\n  color: #34495e;\n  border-top: 3px solid #1abc9c;\n}\n.Hour__time {\n  display: block;\n}\n\n.Select-arrow-zone {\n  display: none;\n}\n.Select-control {\n  border: none;\n  margin-left: -10px;\n}\n\n.Select-value {\n  left: 0 !important;\n  right: -27px !important;\n  max-width: none !important;\n\n  line-height: 1.3em !important;\n  overflow: visible !important;\n  white-space: normal !important;\n}\n.Select-clear-zone {\n  position: absolute;\n  top: -2px;\n  right: 0;\n}\n\n.Select-input {\n  height: 1.3em;\n}\n\n.Select-input > input {\n  height: 1.3em;\n  line-height: 1.3em;\n  padding: 0;\n}\n", ""]);
+exports.push([module.i, ".Hour {\n  height: 57px;\n  width: calc(100%/8 - 4px);\n  display: inline-block;\n  padding: 3px;\n  color: #333;\n  vertical-align: middle;\n  box-sizing: border-box;\n  font-size: 11px;\n  margin-top: 4px;\n  border-top: 3px solid transparent;\n  margin-left: 2px;\n}\n\n@media all and (max-width: 740px){\n  .Hour {\n    width: calc(100%/4 - 4px);\n  }\n}\n\n.Hour_reserved {\n  color: #34495e;\n  border-top: 3px solid #1abc9c;\n}\n.Hour__time {\n  display: block;\n}\n\n.Select-arrow-zone {\n  display: none;\n}\n.Select-control {\n  border: none;\n  margin-left: -10px;\n}\n\n.Select-value {\n  left: 0 !important;\n  right: -27px !important;\n  max-width: none !important;\n\n  line-height: 1.3em !important;\n  overflow: visible !important;\n  white-space: normal !important;\n}\n.Select-clear-zone {\n  position: absolute;\n  top: -2px;\n  right: 0;\n}\n\n.Select-input {\n  height: 1.3em;\n}\n\n.Select-input > input {\n  height: 1.3em;\n  line-height: 1.3em;\n  padding: 0;\n}\n", ""]);
 
 // exports
 
@@ -30000,7 +30026,7 @@ exports = module.exports = __webpack_require__(10)(undefined);
 
 
 // module
-exports.push([module.i, ".Calendar {\n}\n\n.Calendar__day {\n  display: block;\n  margin: auto;\n  /*overflow: hidden;*/\n}\n.Calendar__day:nth-child(1) {\n  position: sticky;\n  top: 0;\n  background: white;\n  z-index: 1;\n}\n\n.Calendar__day_weekend {\n  color: red;\n  height: 30px;\n}\n\n.Calendar__title {\n  display: block;\n  font-size: 12px;\n  font-weight: 600;\n  width: 150px;\n  margin-top: 15px;\n}\n", ""]);
+exports.push([module.i, ".Calendar {\n}\n\n.Calendar__day {\n  display: block;\n  margin: auto;\n  /*overflow: hidden;*/\n}\n.Calendar__day:nth-child(1) {\n  position: sticky;\n  top: 0;\n  background: white;\n  z-index: 1;\n  border-bottom: 2px solid #ccc;\n}\n\n.Calendar__day_weekend {\n  color: red;\n  height: 30px;\n}\n\n.Calendar__title {\n  display: block;\n  font-size: 12px;\n  font-weight: 600;\n  width: 150px;\n  margin-top: 15px;\n}\n", ""]);
 
 // exports
 

@@ -1,5 +1,13 @@
+
 .Application {
     /*width: 600px;*/
     /*margin: auto;*/
-    margin: auto 30px;
+    margin: auto 30px 240px;
+}
+
+@media all and (max-width: 740px){
+    .Application {
+        
+        margin: 0 10px;
+    }
 }

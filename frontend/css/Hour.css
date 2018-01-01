@@ -12,6 +12,12 @@
   margin-left: 2px;
 }
 
+@media all and (max-width: 740px){
+  .Hour {
+    width: calc(100%/4 - 4px);
+  }
+}
+
 .Hour_reserved {
   color: #34495e;
   border-top: 3px solid #1abc9c;

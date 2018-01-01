@@ -44,8 +44,34 @@ class Calendar extends Component {
     const { interval } = this.state;
     return <div>{interval.map(this.renderDay.bind(this))}</div>;
   }
+  changeSchedule(hour, user) {
+    const { schedule } = this.state;
+    let newSchedule;
 
-  renderDay(day) {
+    if (!user) {
+      newSchedule = schedule.filter(({ time }) => !time.overlaps(hour));
+    } else {
+      let existedEvent = schedule.find(({ time }) => time.overlaps(hour));
+
+      if (user && existedEvent) {
+        newSchedule = schedule.filter(({ time }) => !time.overlaps(hour));
+        newSchedule.push(
+          Object.assign(existedEvent, { studentId: user.value })
+        );
+      } else {
+        newSchedule = [
+          ...schedule,
+          {
+            studentId: user.value,
+            time: hour
+          }
+        ];
+      }
+    }
+
+    this.setState({ schedule: newSchedule });
+  }
+  renderDay(day, i) {
     const { start } = day;
     const { schedule, students } = this.state;
     const workDay = Interval.after(start.set({ hour: 10 }), {
@@ -58,13 +84,19 @@ class Calendar extends Component {
     const isHoliday = this.holidays.some(holiday => holiday.equals(day));
 
     return (
-      <time className={b("day", { weekend: isWeekend || isHoliday })}>
+      <time key={i} className={b("day", { weekend: isWeekend || isHoliday })}>
         <span className={b("title")}>
           {start.toLocaleString(this.TIME_FORMATTER)}
         </span>
         {!isWeekend &&
           !isHoliday &&
-          workDay.map(hour => <Hour {...{ hour, schedule, students }} />)}
+          workDay.map(hour => (
+            <Hour
+              key={hour}
+              onChange={this.changeSchedule.bind(this, hour)}
+              {...{ hour, schedule, students }}
+            />
+          ))}
       </time>
     );
   }
@@ -72,9 +104,9 @@ class Calendar extends Component {
   TIME_FORMATTER = {
     weekday: "short",
     day: "numeric",
-    month: "short",
+    month: "short"
     // year: "numeric"
-  }
+  };
 
   holidays = [
     Interval.after(DateTime.local(2018, 1, 6), { day: 1 }),

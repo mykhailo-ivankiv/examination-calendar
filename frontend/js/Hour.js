@@ -25,16 +25,18 @@ class Hour extends Component {
   getStudent(props) {
     const { hour, schedule, students } = props;
     const reservation = schedule.find(({ time }) => time.equals(hour));
-    return reservation &&
+    return (
+      reservation &&
       reservation.studentId && {
         value: students[reservation.studentId].id,
         label: students[reservation.studentId].name
-      };
+      }
+    );
   }
 
   handleChange = selectedOption => {
-    this.setState({ selectedOption });
-    console.log(selectedOption);
+    const { onChange } = this.props;
+    onChange && onChange(selectedOption);
   };
 
   render() {
