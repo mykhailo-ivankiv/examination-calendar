@@ -18349,7 +18349,51 @@ module.exports = camelize;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__BEM__ = __webpack_require__(17);
 
 
-const students = [{ id: 0, name: "Dmytro Kushnir" }, { id: 1, name: "Kovtun Matt" }, { id: 2, name: "Maria Dobko" }, { id: 3, name: "Maryana Mysak" }, { id: 4, name: "Orest Rehusevych" }, { id: 5, name: "Pankiv Andriy" }, { id: 6, name: "Serhii Dubovyk" }, { id: 7, name: "Taras Zelyk" }, { id: 8, name: "Anton Tarasov" }, { id: 9, name: "Vladyslav Velychko" }, { id: 10, name: "Anastasia Vedernikova" }, { id: 11, name: "Arsen Senkivskyy" }, { id: 12, name: "Andriy Borovets" }, { id: 13, name: "Bogdan Kovalchuk" }, { id: 14, name: "Dzvinka Yarish" }, { id: 15, name: "Korabliova Olya" }, { id: 16, name: "Korduba Yaryna" }, { id: 17, name: "Laba Yuriy" }, { id: 18, name: "Lebedenko Roksoliana" }, { id: 19, name: "Marc Soumoussou Kodjovi" }, { id: 20, name: "Mohylevska Kateryna" }, { id: 21, name: "Myroslav Syvokhip" }, { id: 22, name: "Natalija Paranyak" }, { id: 23, name: "Nina Bondar" }, { id: 24, name: "Oleh Smolkin" }, { id: 25, name: "Oleksandr Pryhoda" }, { id: 26, name: "Olenyuk Oksana" }, { id: 27, name: "Olya Bakay" }, { id: 28, name: "Ostap Kharysh" }, { id: 29, name: "Pavlyshyn Yaryna" }, { id: 30, name: "Petro Karabyn" }, { id: 31, name: "Petryshak" }, { id: 32, name: "Skibinska Olena" }, { id: 33, name: "Yasya Shpot" }];
+const schedule = [{
+  student: "Laba Yuriy",
+  time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 2, 11), { hour: 1 }).toLocaleString()
+}, {
+  student: "Orest Rehusevych",
+  time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2017, 12, 29, 14), { hour: 1 }).toLocaleString()
+}, {
+  student: "Pankiv Andriy",
+  time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2017, 12, 29, 15), { hour: 1 }).toLocaleString()
+}, {
+  student: "Serhii Dubovyk",
+  time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 2, 10), { hour: 1 }).toLocaleString()
+}, {
+  student: "Mohylevska Kateryna",
+  time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2017, 12, 29, 11), { hour: 1 }).toLocaleString()
+}, {
+  student: "Nina Bondar",
+  time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 2, 12), { hour: 1 }).toLocaleString()
+}, {
+  student: "Vladyslav Velychko",
+  time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 2, 14), { hour: 1 }).toLocaleString()
+}, {
+  student: "Arsen Senkivskyy",
+  time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 3, 13), { hour: 1 }).toLocaleString()
+}, {
+  student: "Maryana Mysak",
+  time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 3, 12), { hour: 1 }).toLocaleString()
+}, {
+  student: "Pankiv Andriy",
+  time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 3, 14), { hour: 1 }).toLocaleString()
+}, {
+  student: "Maria Dobko",
+  time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 8, 12), { hour: 1 }).toLocaleString()
+}, {
+  student: "Olya Bakay",
+  time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 5, 12), { hour: 1 }).toLocaleString()
+}, {
+  student: "Skibinska Olena",
+  time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 2, 13), { hour: 1 }).toLocaleString()
+}, {
+  student: "Natalija Paranyak",
+  time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 4, 15), { hour: 1 }).toLocaleString()
+}];
+
+console.log(JSON.stringify(schedule));
 
 
 
@@ -18363,49 +18407,7 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_1_react__["Component"] {
     this.holidays = [
     // Interval.after(DateTime.local(2018, 1, 5), { day: 1 }),
     __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 6), { day: 1 }), __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 7), { day: 1 }), __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 14), { day: 1 })];
-    this.reserved = [{
-      student: "Laba Yuriy",
-      time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 2, 11), { hour: 1 })
-    }, {
-      student: "Orest Rehusevych",
-      time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2017, 12, 29, 14), { hour: 1 })
-    }, {
-      student: "Pankiv Andriy",
-      time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2017, 12, 29, 15), { hour: 1 })
-    }, {
-      student: "Serhii Dubovyk",
-      time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 2, 10), { hour: 1 })
-    }, {
-      student: "Mohylevska Kateryna",
-      time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2017, 12, 29, 11), { hour: 1 })
-    }, {
-      student: "Nina Bondar",
-      time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 2, 12), { hour: 1 })
-    }, {
-      student: "Vladyslav Velychko",
-      time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 2, 14), { hour: 1 })
-    }, {
-      student: "Arsen Senkivskyy",
-      time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 3, 13), { hour: 1 })
-    }, {
-      student: "Maryana Mysak",
-      time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 3, 12), { hour: 1 })
-    }, {
-      student: "Pankiv Andriy",
-      time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 3, 14), { hour: 1 })
-    }, {
-      student: "Maria Dobko",
-      time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 8, 12), { hour: 1 })
-    }, {
-      student: "Olya Bakay",
-      time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 5, 12), { hour: 1 })
-    }, {
-      student: "Skibinska Olena",
-      time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 1, 12), { hour: 1 })
-    }, {
-      student: "Natalija Paranyak",
-      time: __WEBPACK_IMPORTED_MODULE_2_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 4, 15), { hour: 1 })
-    }];
+    this.reserved = [];
     const from = __WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2017, 12, 28);
     const to = __WEBPACK_IMPORTED_MODULE_2_luxon__["DateTime"].local(2018, 1, 18);
 
@@ -18420,10 +18422,6 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_1_react__["Component"] {
       null,
       interval.map(this.renderDay.bind(this))
     );
-  }
-
-  openScheduler(hour) {
-    console.log(hour.toLocaleString());
   }
 
   renderHour(hour) {
