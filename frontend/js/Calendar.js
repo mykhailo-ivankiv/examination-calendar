@@ -116,7 +116,6 @@ class Calendar extends Component {
     weekday: "short",
     day: "numeric",
     month: "short"
-    // year: "numeric"
   };
 
   holidays = [

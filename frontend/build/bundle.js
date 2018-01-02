@@ -26121,7 +26121,6 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       weekday: "short",
       day: "numeric",
       month: "short"
-      // year: "numeric"
     };
     this.holidays = [__WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 6), { day: 1 }), __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 7), { day: 1 }), __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local(2018, 1, 14), { day: 1 })];
     const from = __WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].local().set({
@@ -30057,7 +30056,134 @@ exports.push([module.i, ".Calendar {\n}\n\n.Calendar__day {\n  display: block;\n
 
 
 /***/ }),
-/* 47 */,
+/* 47 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__BEM__ = __webpack_require__(12);
+
+
+
+
+const b = Object(__WEBPACK_IMPORTED_MODULE_2__BEM__["a" /* default */])("User");
+
+class User extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
+  constructor(props) {
+    super(props);
+
+    this.renderLoginLink = () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      "a",
+      { href: "https://github.com/login/oauth/authorize?client_id=c248798633e9dcc6d002" },
+      "\u0423\u0432\u0456\u0439\u0442\u0438 \u0447\u0435\u0440\u0435\u0437 Github"
+    );
+
+    const { code, access_token } = __WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */];
+    if (access_token) {
+      this.getUser();
+    }
+
+    this.state = {
+      code
+    };
+  }
+
+  async getUser() {
+    const user = await __WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getUser();
+    this.setState({ user });
+  }
+
+  render() {
+    const { code, access_token } = __WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */];
+    const { user } = this.state;
+
+    if (!code && !access_token) {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        "div",
+        { className: b() },
+        this.renderLoginLink()
+      );
+    }
+
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      "div",
+      { className: b() },
+      user && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { className: b("avatar"), src: user.avatar_url })
+    );
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (User);
+
+class _User {
+
+  constructor() {
+    _initialiseProps.call(this);
+
+    const access_token = localStorage.getItem("access_token");
+
+    if (access_token) {
+      this.headers.append("Authorization", `token ${access_token}`);
+      this.access_token = access_token;
+      this.getData();
+    }
+
+    if (!access_token) {
+      let code = new URLSearchParams(window.location.search).get("code");
+
+      if (code) {
+        const { client_id, client_secret, headers } = this;
+        const body = new FormData();
+
+        body.set("client_id", client_id);
+        body.set("client_secret", client_secret);
+        body.set("code", code);
+
+        (async () => {
+          let responce = await (await fetch("https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token", {
+            method: "POST",
+            mode: "cors",
+            headers,
+            body
+          })).json();
+
+          if (responce.access_token) {
+            const { access_token } = user;
+            localStorage.setItem("access_token", access_token);
+            headers.append("Authorization", `token ${access_token}`);
+          }
+        })();
+      }
+    }
+  }
+}
+
+var _initialiseProps = function () {
+  this.client_id = "c248798633e9dcc6d002";
+  this.client_secret = "ade727b69c01e6a3ee9046823a8fd39db4e9d60e";
+  this.headers = new Headers({
+    Accept: "application/vnd.github.v3+json"
+  });
+
+  this.getData = async () => {
+    const { headers, access_token } = this;
+    const user = await (await fetch(`https://api.github.com/user`, {
+      headers: {
+        // "Accept": "application/json",
+        Authorization: `token ${access_token}`
+      },
+      mode: "cors"
+    })).json();
+
+    document.getElementById("user").innerHTML = `<img src="${user.avatar_url}" />`;
+  };
+};
+
+new _User();
+
+/***/ }),
 /* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -30065,16 +30191,18 @@ exports.push([module.i, ".Calendar {\n}\n\n.Calendar__day {\n  display: block;\n
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Calendar__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__css_Application_css__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__css_Application_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__css_Application_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__BEM__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__User__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__css_Application_css__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__css_Application_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__css_Application_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__BEM__ = __webpack_require__(12);
 
 
 
 
 
 
-const b = Object(__WEBPACK_IMPORTED_MODULE_3__BEM__["a" /* default */])('Application');
+
+const b = Object(__WEBPACK_IMPORTED_MODULE_4__BEM__["a" /* default */])('Application');
 
 class Application extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     constructor(props) {
@@ -30084,13 +30212,14 @@ class Application extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
 
     render() {
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'section',
-            { 'class': 'Application' },
+            "section",
+            { className: "Application" },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'h2',
+                "h2",
                 null,
-                '\u0420\u043E\u0437\u043A\u043B\u0430\u0434 \u0456\u0441\u043F\u0438\u0442\u0443 \u0437 \u041A\u0443\u0440\u0441\u0443 \u0432\u0435\u0431-\u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0438'
+                "\u0420\u043E\u0437\u043A\u043B\u0430\u0434 \u0456\u0441\u043F\u0438\u0442\u0443 \u0437 \u041A\u0443\u0440\u0441\u0443 \u0432\u0435\u0431-\u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0438"
             ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__User__["a" /* default */], null),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Calendar__["a" /* default */], null)
         );
     }

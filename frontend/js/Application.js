@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Calendar from "./Calendar"
+import User from "./User";
 import '../css/Application.css'
 
 import block from './BEM'
@@ -14,8 +15,9 @@ class Application extends Component {
 
     render() {
         return (
-            <section class="Application">
+            <section className="Application">
                 <h2>Розклад іспиту з Курсу веб-розробки</h2>
+                <User/>
                 <Calendar/>
             </section>
         )
