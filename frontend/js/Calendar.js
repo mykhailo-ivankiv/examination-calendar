@@ -23,6 +23,7 @@ class Calendar extends Component {
 
     const interval = Interval.fromDateTimes(from, to).splitBy({ days: 1 });
     this.state = {
+      edit: false,
       from,
       to,
       interval,
@@ -42,13 +43,13 @@ class Calendar extends Component {
 
   saveSchedule = () => {
     api.setSchedule(this.state.schedule);
-  }
+  };
 
   render() {
-    const { interval } = this.state;
+    const { interval, edit } = this.state;
     return (
       <div>
-        <button onClick={this.saveSchedule}>save</button>
+        {edit && <button onClick={this.saveSchedule}>save</button>}
         {interval.map(this.renderDay.bind(this))}
       </div>
     );
@@ -82,7 +83,7 @@ class Calendar extends Component {
   }
   renderDay(day, i) {
     const { start } = day;
-    const { schedule, students } = this.state;
+    const { schedule, students, edit } = this.state;
     const workDay = Interval.after(start.set({ hour: 10 }), {
       hours: 8
     }).splitBy({ hour: 1 });
@@ -101,6 +102,7 @@ class Calendar extends Component {
           !isHoliday &&
           workDay.map(hour => (
             <Hour
+              edit={edit}
               key={hour}
               onChange={this.changeSchedule.bind(this, hour)}
               {...{ hour, schedule, students }}

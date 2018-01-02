@@ -34,13 +34,8 @@ class Hour extends Component {
     );
   }
 
-  handleChange = selectedOption => {
-    const { onChange } = this.props;
-    onChange && onChange(selectedOption);
-  };
-
   render() {
-    const { hour, schedule, students } = this.props;
+    const { hour, schedule, students, edit } = this.props;
     const reservation = schedule.find(({ time }) => time.equals(hour));
     const { selectedOption } = this.state;
 
@@ -49,17 +44,28 @@ class Hour extends Component {
         <span className={b("time")}>
           {hour.start.toLocaleString(DateTime.TIME_24_SIMPLE)}
         </span>
-
-        <Select
-          multi={false}
-          placeholder=""
-          value={selectedOption}
-          onChange={this.handleChange}
-          options={students.map(({ id, name }) => ({ value: id, label: name }))}
-        />
+        {edit ? (
+          <Select
+            multi={false}
+            placeholder=""
+            value={selectedOption}
+            onChange={this.handleChange}
+            options={students.map(({ id, name }) => ({
+              value: id,
+              label: name
+            }))}
+          />
+        ) : (
+          selectedOption && selectedOption.label
+        )}
       </div>
     );
   }
+
+  handleChange = selectedOption => {
+    const { onChange } = this.props;
+    onChange && onChange(selectedOption);
+  };
 }
 
 export default Hour;

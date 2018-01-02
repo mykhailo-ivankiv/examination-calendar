@@ -8831,21 +8831,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Calendar__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__User__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Application__ = __webpack_require__(48);
 
 
 
 
-
-// new Calendar(document.querySelector("#calendar"));
-
-// ReactDOM.render(
-//     <User name="Taylor" />,
-//     document.querySelector("#user")
-// );
-
-__WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Calendar__["a" /* default */], null), document.querySelector("#calendar"));
+__WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Application__["a" /* default */], null), document.querySelector("#app"));
 
 /***/ }),
 /* 23 */
@@ -26143,6 +26134,7 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
 
     const interval = __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].fromDateTimes(from, to).splitBy({ days: 1 });
     this.state = {
+      edit: false,
       from,
       to,
       interval,
@@ -26158,11 +26150,11 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
   }
 
   render() {
-    const { interval } = this.state;
+    const { interval, edit } = this.state;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       "div",
       null,
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+      edit && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "button",
         { onClick: this.saveSchedule },
         "save"
@@ -26194,7 +26186,7 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
   }
   renderDay(day, i) {
     const { start } = day;
-    const { schedule, students } = this.state;
+    const { schedule, students, edit } = this.state;
     const workDay = __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(start.set({ hour: 10 }), {
       hours: 8
     }).splitBy({ hour: 1 });
@@ -26212,6 +26204,7 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
         start.toLocaleString(this.TIME_FORMATTER)
       ),
       !isWeekend && !isHoliday && workDay.map(hour => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Hour__["a" /* default */], _extends({
+        edit: edit,
         key: hour,
         onChange: this.changeSchedule.bind(this, hour)
       }, { hour, schedule, students })))
@@ -26276,7 +26269,7 @@ class Hour extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
   }
 
   render() {
-    const { hour, schedule, students } = this.props;
+    const { hour, schedule, students, edit } = this.props;
     const reservation = schedule.find(({ time }) => time.equals(hour));
     const { selectedOption } = this.state;
 
@@ -26288,15 +26281,19 @@ class Hour extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
         { className: b("time") },
         hour.start.toLocaleString(__WEBPACK_IMPORTED_MODULE_1_luxon__["DateTime"].TIME_24_SIMPLE)
       ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_select__["a" /* default */], {
+      edit ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_select__["a" /* default */], {
         multi: false,
         placeholder: "",
         value: selectedOption,
         onChange: this.handleChange,
-        options: students.map(({ id, name }) => ({ value: id, label: name }))
-      })
+        options: students.map(({ id, name }) => ({
+          value: id,
+          label: name
+        }))
+      }) : selectedOption && selectedOption.label
     );
   }
+
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Hour);
@@ -30060,132 +30057,91 @@ exports.push([module.i, ".Calendar {\n}\n\n.Calendar__day {\n  display: block;\n
 
 
 /***/ }),
-/* 47 */
+/* 47 */,
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__BEM__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Calendar__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__css_Application_css__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__css_Application_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__css_Application_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__BEM__ = __webpack_require__(12);
 
 
 
 
-const b = Object(__WEBPACK_IMPORTED_MODULE_2__BEM__["a" /* default */])("User");
 
-class User extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
-  constructor(props) {
-    super(props);
 
-    this.renderLoginLink = () => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      "a",
-      { href: "https://github.com/login/oauth/authorize?client_id=c248798633e9dcc6d002" },
-      "\u0423\u0432\u0456\u0439\u0442\u0438 \u0447\u0435\u0440\u0435\u0437 Github"
-    );
+const b = Object(__WEBPACK_IMPORTED_MODULE_3__BEM__["a" /* default */])('Application');
 
-    const { code, access_token } = __WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */];
-    if (access_token) {
-      this.getUser();
+class Application extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
+    constructor(props) {
+        super(props);
+        this.state = {};
     }
 
-    this.state = {
-      code
-    };
-  }
-
-  async getUser() {
-    const user = await __WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].getUser();
-    this.setState({ user });
-  }
-
-  render() {
-    const { code, access_token } = __WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */];
-    const { user } = this.state;
-
-    if (!code && !access_token) {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "div",
-        { className: b() },
-        this.renderLoginLink()
-      );
+    render() {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'section',
+            { 'class': 'Application' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'h2',
+                null,
+                '\u0420\u043E\u0437\u043A\u043B\u0430\u0434 \u0456\u0441\u043F\u0438\u0442\u0443 \u0437 \u041A\u0443\u0440\u0441\u0443 \u0432\u0435\u0431-\u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0438'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Calendar__["a" /* default */], null)
+        );
     }
-
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      "div",
-      { className: b() },
-      user && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { className: b("avatar"), src: user.avatar_url })
-    );
-  }
 }
 
-/* unused harmony default export */ var _unused_webpack_default_export = (User);
+/* harmony default export */ __webpack_exports__["a"] = (Application);
 
-class _User {
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
 
-  constructor() {
-    _initialiseProps.call(this);
+// style-loader: Adds some css to the DOM by adding a <style> tag
 
-    const access_token = localStorage.getItem("access_token");
+// load the styles
+var content = __webpack_require__(50);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
 
-    if (access_token) {
-      this.headers.append("Authorization", `token ${access_token}`);
-      this.access_token = access_token;
-      this.getData();
-    }
-
-    if (!access_token) {
-      let code = new URLSearchParams(window.location.search).get("code");
-
-      if (code) {
-        const { client_id, client_secret, headers } = this;
-        const body = new FormData();
-
-        body.set("client_id", client_id);
-        body.set("client_secret", client_secret);
-        body.set("code", code);
-
-        (async () => {
-          let responce = await (await fetch("https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token", {
-            method: "POST",
-            mode: "cors",
-            headers,
-            body
-          })).json();
-
-          if (responce.access_token) {
-            const { access_token } = user;
-            localStorage.setItem("access_token", access_token);
-            headers.append("Authorization", `token ${access_token}`);
-          }
-        })();
-      }
-    }
-  }
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(11)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!./Application.css", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!./Application.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
 }
 
-var _initialiseProps = function () {
-  this.client_id = "c248798633e9dcc6d002";
-  this.client_secret = "ade727b69c01e6a3ee9046823a8fd39db4e9d60e";
-  this.headers = new Headers({
-    Accept: "application/vnd.github.v3+json"
-  });
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
 
-  this.getData = async () => {
-    const { headers, access_token } = this;
-    const user = await (await fetch(`https://api.github.com/user`, {
-      headers: {
-        // "Accept": "application/json",
-        Authorization: `token ${access_token}`
-      },
-      mode: "cors"
-    })).json();
+exports = module.exports = __webpack_require__(10)(undefined);
+// imports
 
-    document.getElementById("user").innerHTML = `<img src="${user.avatar_url}" />`;
-  };
-};
 
-new _User();
+// module
+exports.push([module.i, "\n.Application {\n    /*width: 600px;*/\n    /*margin: auto;*/\n    margin: auto 30px 240px;\n}\n\n@media all and (max-width: 740px){\n    .Application {\n        \n        margin: 0 10px;\n    }\n}", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);
