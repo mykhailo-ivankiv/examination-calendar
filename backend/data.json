@@ -1,288 +1,316 @@
 {
   "students": [
     {
-      "id": 0,
+      "id": "0",
       "name": "Dmytro Kushnir"
     },
     {
-      "id": 1,
+      "id": "1",
       "name": "Kovtun Matt"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Maria Dobko"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Maryana Mysak"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Orest Rehusevych"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Pankiv Andriy"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Serhii Dubovyk"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Taras Zelyk"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Anton Tarasov"
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "Vladyslav Velychko"
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "Anastasia Vedernikova"
     },
     {
-      "id": 11,
+      "id": "11",
       "name": "Arsen Senkivskyy"
     },
     {
-      "id": 12,
+      "id": "12",
       "name": "Andriy Borovets"
     },
     {
-      "id": 13,
+      "id": "13",
       "name": "Bogdan Kovalchuk"
     },
     {
-      "id": 14,
+      "id": "14",
       "name": "Dzvinka Yarish"
     },
     {
-      "id": 15,
+      "id": "15",
       "name": "Korabliova Olya"
     },
     {
-      "id": 16,
+      "id": "16",
       "name": "Korduba Yaryna"
     },
     {
-      "id": 17,
+      "id": "17",
       "name": "Laba Yuriy"
     },
     {
-      "id": 18,
+      "id": "18",
       "name": "Lebedenko Roksoliana"
     },
     {
-      "id": 19,
+      "id": "19",
       "name": "Marc Soumoussou Kodjovi"
     },
     {
-      "id": 20,
+      "id": "20",
       "name": "Mohylevska Kateryna"
     },
     {
-      "id": 21,
+      "id": "21",
       "name": "Myroslav Syvokhip"
     },
     {
-      "id": 22,
+      "id": "22",
       "name": "Natalija Paranyak"
     },
     {
-      "id": 23,
+      "id": "23",
       "name": "Nina Bondar"
     },
     {
-      "id": 24,
+      "id": "24",
       "name": "Oleh Smolkin"
     },
     {
-      "id": 25,
+      "id": "25",
       "name": "Oleksandr Pryhoda"
     },
     {
-      "id": 26,
+      "id": "26",
       "name": "Olenyuk Oksana"
     },
     {
-      "id": 27,
+      "id": "27",
       "name": "Olya Bakay"
     },
     {
-      "id": 28,
+      "id": "28",
       "name": "Ostap Kharysh"
     },
     {
-      "id": 29,
+      "id": "29",
       "name": "Pavlyshyn Yaryna"
     },
     {
-      "id": 30,
+      "id": "30",
       "name": "Petro Karabyn"
     },
     {
-      "id": 31,
+      "id": "31",
       "name": "Bohdan Petryshak"
     },
     {
-      "id": 32,
+      "id": "32",
       "name": "Skibinska Olena"
     },
     {
-      "id": 33,
+      "id": "33",
       "name": "Yasya Shpot"
     }
   ],
   "schedule": [
     {
-      "studentId": 17,
+      "studentId": "17",
       "time": {
         "start": "2018-01-02T11:00:00.000+02:00",
         "end": "2018-01-02T12:00:00.000+02:00"
       }
     },
     {
-      "studentId": 4,
+      "studentId": "4",
       "time": {
         "start": "2017-12-29T14:00:00.000+02:00",
         "end": "2017-12-29T15:00:00.000+02:00"
       }
     },
     {
-      "studentId": 5,
+      "studentId": "5",
       "time": {
         "start": "2017-12-29T15:00:00.000+02:00",
         "end": "2017-12-29T16:00:00.000+02:00"
       }
     },
     {
-      "studentId": 6,
+      "studentId": "6",
       "time": {
         "start": "2018-01-02T10:00:00.000+02:00",
         "end": "2018-01-02T11:00:00.000+02:00"
       }
     },
     {
-      "studentId": 20,
+      "studentId": "20",
       "time": {
         "start": "2017-12-29T11:00:00.000+02:00",
         "end": "2017-12-29T12:00:00.000+02:00"
       }
     },
     {
-      "studentId": 23,
+      "studentId": "23",
       "time": {
         "start": "2018-01-02T12:00:00.000+02:00",
         "end": "2018-01-02T13:00:00.000+02:00"
       }
     },
     {
-      "studentId": 11,
+      "studentId": "11",
       "time": {
         "start": "2018-01-03T13:00:00.000+02:00",
         "end": "2018-01-03T14:00:00.000+02:00"
       }
     },
     {
-      "studentId": 3,
+      "studentId": "3",
       "time": {
         "start": "2018-01-03T12:00:00.000+02:00",
         "end": "2018-01-03T13:00:00.000+02:00"
       }
     },
     {
-      "studentId": 5,
+      "studentId": "5",
       "time": {
         "start": "2018-01-03T14:00:00.000+02:00",
         "end": "2018-01-03T15:00:00.000+02:00"
       }
     },
     {
-      "studentId": 2,
+      "studentId": "2",
       "time": {
         "start": "2018-01-08T12:00:00.000+02:00",
         "end": "2018-01-08T13:00:00.000+02:00"
       }
     },
     {
-      "studentId": 27,
+      "studentId": "27",
       "time": {
         "start": "2018-01-05T12:00:00.000+02:00",
         "end": "2018-01-05T13:00:00.000+02:00"
       }
     },
     {
-      "studentId": 32,
+      "studentId": "32",
       "time": {
         "start": "2018-01-02T13:00:00.000+02:00",
         "end": "2018-01-02T14:00:00.000+02:00"
       }
     },
     {
-      "studentId": 22,
+      "studentId": "22",
       "time": {
         "start": "2018-01-04T15:00:00.000+02:00",
         "end": "2018-01-04T16:00:00.000+02:00"
       }
     },
     {
-      "studentId": 15,
+      "studentId": "15",
       "time": {
         "start": "2018-01-03T16:00:00.000+02:00",
         "end": "2018-01-03T17:00:00.000+02:00"
       }
     },
     {
-      "studentId": 9,
+      "studentId": "9",
       "time": {
         "start": "2018-01-05T14:00:00.000+02:00",
         "end": "2018-01-05T15:00:00.000+02:00"
       }
     },
     {
-      "studentId": 23,
+      "studentId": "23",
       "time": {
         "start": "2018-01-08T10:00:00.000+02:00",
         "end": "2018-01-08T11:00:00.000+02:00"
       }
     },
     {
-      "studentId": 26,
+      "studentId": "26",
       "time": {
         "start": "2018-01-08T11:00:00.000+02:00",
         "end": "2018-01-08T12:00:00.000+02:00"
       }
     },
     {
-      "studentId": 32,
+      "studentId": "32",
       "time": {
         "start": "2018-01-08T13:00:00.000+02:00",
         "end": "2018-01-08T14:00:00.000+02:00"
       }
     },
     {
-      "studentId": 17,
+      "studentId": "17",
       "time": {
         "start": "2018-01-05T10:00:00.000+02:00",
         "end": "2018-01-05T11:00:00.000+02:00"
       }
     },
     {
-      "studentId": 6,
+      "studentId": "6",
       "time": {
         "start": "2018-01-08T14:00:00.000+02:00",
         "end": "2018-01-08T15:00:00.000+02:00"
       }
     },
     {
-      "studentId": 8,
+      "studentId": "8",
       "time": {
         "start": "2018-01-08T15:00:00.000+02:00",
         "end": "2018-01-08T16:00:00.000+02:00"
+      }
+    },
+    {
+      "studentId": "3",
+      "time": {
+        "start": "2018-01-08T16:00:00.000+02:00",
+        "end": "2018-01-08T17:00:00.000+02:00"
+      }
+    },
+    {
+      "studentId": "0",
+      "time": {
+        "start": "2018-01-05T15:00:00.000+02:00",
+        "end": "2018-01-05T16:00:00.000+02:00"
+      }
+    },
+    {
+      "studentId": "30",
+      "time": {
+        "start": "2018-01-05T16:00:00.000+02:00",
+        "end": "2018-01-05T17:00:00.000+02:00"
+      }
+    },
+    {
+      "studentId": "25",
+      "time": {
+        "start": "2018-01-09T10:00:00.000+02:00",
+        "end": "2018-01-09T11:00:00.000+02:00"
       }
     }
   ]
