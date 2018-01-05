@@ -26117,7 +26117,6 @@ class Application extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
                 null,
                 "\u0420\u043E\u0437\u043A\u043B\u0430\u0434 \u0456\u0441\u043F\u0438\u0442\u0443 \u0437 \u041A\u0443\u0440\u0441\u0443 \u0432\u0435\u0431-\u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0438"
             ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__User__["a" /* default */], null),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Calendar__["a" /* default */], null)
         );
     }
@@ -30159,7 +30158,7 @@ class User extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
   }
 }
 
-/* harmony default export */ __webpack_exports__["a"] = (User);
+/* unused harmony default export */ var _unused_webpack_default_export = (User);
 
 class _User {
 
