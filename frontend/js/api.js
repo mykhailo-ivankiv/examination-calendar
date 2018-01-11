@@ -49,12 +49,15 @@ class API {
         "Content-type": "application/json"
       },
       method: "POST",
+      credentials: 'include',
       body
     });
   }
 
   async getSchedule() {
-    const schedule = await (await fetch("/api/schedule")).json();
+    const schedule = await (await fetch("/api/schedule", {
+        credentials: 'include'
+    })).json();
     return schedule.map(({ studentId, time }) => ({
       studentId,
       time: Interval.fromDateTimes(

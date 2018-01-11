@@ -8327,6 +8327,79 @@ exports.Settings = Settings;
 
 /***/ }),
 /* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_luxon__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_luxon___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_luxon__);
+
+class API {
+
+  constructor() {
+    this.access_token = localStorage.getItem("access_token");
+    this.client_id = "c248798633e9dcc6d002";
+    this.client_secret = "ade727b69c01e6a3ee9046823a8fd39db4e9d60e";
+    this.headers = new Headers({
+      Accept: "application/vnd.github.v3+json"
+    });
+
+    this.code = new URLSearchParams(window.location.search).get("code");
+    if (this.code) {
+      history.replaceState({}, "", location.origin + location.pathname);
+    }
+
+    if (this.access_token || this.code) {
+      this.authenticate();
+    }
+  }
+
+  async getProfile() {
+    return await (await fetch("/api/profile", {
+      credentials: 'include'
+    })).json();
+  }
+
+  async getStudents() {
+    return await (await fetch("/api/students", {
+      credentials: 'include'
+    })).json();
+  }
+
+  async setSchedule(newSchedule) {
+
+    let body = JSON.stringify(newSchedule.map(({ studentId, time: { start, end } }) => ({
+      studentId,
+      time: {
+        start,
+        end
+      }
+    })));
+
+    await fetch("/api/schedule", {
+      headers: {
+        "Content-type": "application/json"
+      },
+      method: "POST",
+      credentials: 'include',
+      body
+    });
+  }
+
+  async getSchedule() {
+    const schedule = await (await fetch("/api/schedule", {
+      credentials: 'include'
+    })).json();
+    return schedule.map(({ studentId, time }) => ({
+      studentId,
+      time: __WEBPACK_IMPORTED_MODULE_0_luxon__["Interval"].fromDateTimes(__WEBPACK_IMPORTED_MODULE_0_luxon__["DateTime"].fromISO(time.start), __WEBPACK_IMPORTED_MODULE_0_luxon__["DateTime"].fromISO(time.end))
+    }));
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (new API());
+
+/***/ }),
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8372,7 +8445,7 @@ if (process.env.NODE_ENV === 'production') {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8411,7 +8484,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8492,7 +8565,7 @@ module.exports = EventListener;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8534,7 +8607,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8605,7 +8678,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8648,7 +8721,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8676,76 +8749,6 @@ function focusNode(node) {
 }
 
 module.exports = focusNode;
-
-/***/ }),
-/* 20 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_luxon__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_luxon___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_luxon__);
-
-class API {
-
-  constructor() {
-    this.access_token = localStorage.getItem("access_token");
-    this.client_id = "c248798633e9dcc6d002";
-    this.client_secret = "ade727b69c01e6a3ee9046823a8fd39db4e9d60e";
-    this.headers = new Headers({
-      Accept: "application/vnd.github.v3+json"
-    });
-
-    this.code = new URLSearchParams(window.location.search).get("code");
-    if (this.code) {
-      history.replaceState({}, "", location.origin + location.pathname);
-    }
-
-    if (this.access_token || this.code) {
-      this.authenticate();
-    }
-  }
-
-  async getProfile() {
-    return await (await fetch("/api/profile", {
-      credentials: 'include'
-    })).json();
-  }
-
-  async getStudents() {
-    return await (await fetch("/api/students", {
-      credentials: 'include'
-    })).json();
-  }
-
-  async setSchedule(newSchedule) {
-
-    let body = JSON.stringify(newSchedule.map(({ studentId, time: { start, end } }) => ({
-      studentId,
-      time: {
-        start,
-        end
-      }
-    })));
-
-    await fetch("/api/schedule", {
-      headers: {
-        "Content-type": "application/json"
-      },
-      method: "POST",
-      body
-    });
-  }
-
-  async getSchedule() {
-    const schedule = await (await fetch("/api/schedule")).json();
-    return schedule.map(({ studentId, time }) => ({
-      studentId,
-      time: __WEBPACK_IMPORTED_MODULE_0_luxon__["Interval"].fromDateTimes(__WEBPACK_IMPORTED_MODULE_0_luxon__["DateTime"].fromISO(time.start), __WEBPACK_IMPORTED_MODULE_0_luxon__["DateTime"].fromISO(time.end))
-    }));
-  }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (new API());
 
 /***/ }),
 /* 21 */
@@ -8790,7 +8793,7 @@ if (process.env.NODE_ENV !== 'production') {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Application__ = __webpack_require__(33);
 
@@ -10209,7 +10212,7 @@ module.exports = react;
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(1),l=__webpack_require__(14),B=__webpack_require__(3),C=__webpack_require__(2),ba=__webpack_require__(15),da=__webpack_require__(16),ea=__webpack_require__(17),fa=__webpack_require__(18),ia=__webpack_require__(19),D=__webpack_require__(5);
+var aa=__webpack_require__(1),l=__webpack_require__(15),B=__webpack_require__(3),C=__webpack_require__(2),ba=__webpack_require__(16),da=__webpack_require__(17),ea=__webpack_require__(18),fa=__webpack_require__(19),ia=__webpack_require__(20),D=__webpack_require__(5);
 function E(a){for(var b=arguments.length-1,c="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);b=Error(c+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}aa?void 0:E("227");
 var oa={children:!0,dangerouslySetInnerHTML:!0,defaultValue:!0,defaultChecked:!0,innerHTML:!0,suppressContentEditableWarning:!0,suppressHydrationWarning:!0,style:!0};function pa(a,b){return(a&b)===b}
 var ta={MUST_USE_PROPERTY:1,HAS_BOOLEAN_VALUE:4,HAS_NUMERIC_VALUE:8,HAS_POSITIVE_NUMERIC_VALUE:24,HAS_OVERLOADED_BOOLEAN_VALUE:32,HAS_STRING_BOOLEAN_VALUE:64,injectDOMPropertyConfig:function(a){var b=ta,c=a.Properties||{},d=a.DOMAttributeNamespaces||{},e=a.DOMAttributeNames||{};a=a.DOMMutationMethods||{};for(var f in c){ua.hasOwnProperty(f)?E("48",f):void 0;var g=f.toLowerCase(),h=c[f];g={attributeName:g,attributeNamespace:null,propertyName:f,mutationMethod:null,mustUseProperty:pa(h,b.MUST_USE_PROPERTY),
@@ -10509,14 +10512,14 @@ if (process.env.NODE_ENV !== "production") {
 var React = __webpack_require__(1);
 var invariant = __webpack_require__(4);
 var warning = __webpack_require__(6);
-var ExecutionEnvironment = __webpack_require__(14);
+var ExecutionEnvironment = __webpack_require__(15);
 var _assign = __webpack_require__(3);
 var emptyFunction = __webpack_require__(2);
-var EventListener = __webpack_require__(15);
-var getActiveElement = __webpack_require__(16);
-var shallowEqual = __webpack_require__(17);
-var containsNode = __webpack_require__(18);
-var focusNode = __webpack_require__(19);
+var EventListener = __webpack_require__(16);
+var getActiveElement = __webpack_require__(17);
+var shallowEqual = __webpack_require__(18);
+var containsNode = __webpack_require__(19);
+var focusNode = __webpack_require__(20);
 var emptyObject = __webpack_require__(5);
 var checkPropTypes = __webpack_require__(10);
 var hyphenateStyleName = __webpack_require__(29);
@@ -26054,6 +26057,8 @@ module.exports = camelize;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__css_Application_css__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__css_Application_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__css_Application_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__BEM__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__api__ = __webpack_require__(13);
+
 
 
 
@@ -26066,10 +26071,33 @@ const b = Object(__WEBPACK_IMPORTED_MODULE_4__BEM__["a" /* default */])('Applica
 class Application extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     constructor(props) {
         super(props);
-        this.state = {};
+
+        this.editCalendar = () => {
+            this.setState({
+                edit: true,
+                schedule: null
+            });
+        };
+
+        this.saveCalendar = () => {
+            const { schedule } = this.state;
+            if (schedule) {
+                __WEBPACK_IMPORTED_MODULE_5__api__["a" /* default */].setSchedule(schedule);
+            }
+            this.setState({ edit: false });
+        };
+
+        this.onScheduleChange = schedule => {
+            this.setState({ schedule });
+        };
+
+        this.state = {
+            edit: false
+        };
     }
 
     render() {
+        const { edit } = this.state;
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             "section",
             { className: "Application" },
@@ -26078,8 +26106,14 @@ class Application extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
                 null,
                 "\u0420\u043E\u0437\u043A\u043B\u0430\u0434 \u0456\u0441\u043F\u0438\u0442\u0443 \u0437 \u041A\u0443\u0440\u0441\u0443 \u0432\u0435\u0431-\u0440\u043E\u0437\u0440\u043E\u0431\u043A\u0438"
             ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__User__["a" /* default */], null),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Calendar__["a" /* default */], null)
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__User__["a" /* default */], {
+                onEdit: this.editCalendar,
+                onSave: this.saveCalendar
+            }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Calendar__["a" /* default */], {
+                edit: edit,
+                onScheduleChange: this.onScheduleChange
+            })
         );
     }
 }
@@ -26095,7 +26129,7 @@ class Application extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_luxon__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_luxon___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_luxon__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__api__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__api__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Hour__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__css_Calendar_css__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__css_Calendar_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__css_Calendar_css__);
@@ -26117,11 +26151,6 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
     super(props);
 
     // const from = DateTime.local(2017, 12, 28);
-
-    this.saveSchedule = () => {
-      __WEBPACK_IMPORTED_MODULE_2__api__["a" /* default */].setSchedule(this.state.schedule);
-    };
-
     this.TIME_FORMATTER = {
       weekday: "short",
       day: "numeric",
@@ -26138,7 +26167,6 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
 
     const interval = __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].fromDateTimes(from, to).splitBy({ days: 1 });
     this.state = {
-      edit: true,
       from,
       to,
       interval,
@@ -26154,18 +26182,15 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
   }
 
   render() {
-    const { interval, edit } = this.state;
+    const { interval } = this.state;
+
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       "div",
       null,
-      edit && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "button",
-        { onClick: this.saveSchedule },
-        "save"
-      ),
       interval.map(this.renderDay.bind(this))
     );
   }
+
   changeSchedule(hour, user) {
     const { schedule } = this.state;
     let newSchedule;
@@ -26185,12 +26210,13 @@ class Calendar extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
         }];
       }
     }
-
+    this.props.onScheduleChange(newSchedule);
     this.setState({ schedule: newSchedule });
   }
   renderDay(day, i) {
     const { start } = day;
-    const { schedule, students, edit } = this.state;
+    const { schedule, students } = this.state;
+    const { edit } = this.props;
     const workDay = __WEBPACK_IMPORTED_MODULE_1_luxon__["Interval"].after(start.set({ hour: 10 }), {
       hours: 8
     }).splitBy({ hour: 1 });
@@ -26320,7 +26346,7 @@ class Hour extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_input_autosize__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_input_autosize___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_input_autosize__);
@@ -30067,7 +30093,7 @@ exports.push([module.i, ".Calendar {\n}\n\n.Calendar__day {\n  display: block;\n
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__BEM__ = __webpack_require__(9);
 
 
@@ -30085,6 +30111,16 @@ class User extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       "\u0423\u0432\u0456\u0439\u0442\u0438 \u0447\u0435\u0440\u0435\u0437 Github"
     );
 
+    this.toggleEdit = () => {
+      this.setState({ edit: !this.state.edit });
+
+      if (!this.state.edit) {
+        this.props.onEdit();
+      } else {
+        this.props.onSave();
+      }
+    };
+
     this.state = {};
     this.getProfile();
   }
@@ -30095,8 +30131,8 @@ class User extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
   }
 
   render() {
-    const { profile } = this.state;
-    console.log(profile);
+    const { profile, edit } = this.state;
+
     if (!profile) {
       return "";
     } else if (profile.error) {
@@ -30109,7 +30145,17 @@ class User extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "div",
         { className: b() },
-        profile && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { className: b("avatar"), src: profile._json.avatar_url })
+        profile.admin && !edit && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "button",
+          { className: b("button"), onClick: this.toggleEdit },
+          "Edit"
+        ),
+        profile.admin && edit && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "button",
+          { className: b("button"), onClick: this.toggleEdit },
+          "Done"
+        ),
+        profile && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { className: b("avatar"), src: profile.avatar_url })
       );
     }
   }

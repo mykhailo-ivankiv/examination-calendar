@@ -19,9 +19,18 @@ class User extends Component {
 
   renderLoginLink = () => <a href={`/auth/github`}>Увійти через Github</a>;
 
+  toggleEdit = () => {
+      this.setState({edit: !this.state.edit});
+
+      if (!this.state.edit) {this.props.onEdit(); }
+      else { this.props.onSave(); }
+
+
+  }
+
   render() {
-    const { profile } = this.state;
-    console.log(profile);
+    const { profile, edit } = this.state;
+
     if (!profile) {
       return "";
     } else if (profile.error) {
@@ -29,7 +38,10 @@ class User extends Component {
     } else {
       return (
         <div className={b()}>
-          {profile && <img className={b("avatar")} src={profile._json.avatar_url} />}
+          {profile.admin && !edit && <button className={b("button")} onClick={this.toggleEdit}>Edit</button>}
+          {profile.admin && edit && <button className={b("button")} onClick={this.toggleEdit}>Done</button>}
+
+          {profile && <img className={b("avatar")} src={profile.avatar_url} />}
         </div>
       );
     }

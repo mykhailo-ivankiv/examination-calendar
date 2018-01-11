@@ -12,15 +12,24 @@ const ensureAuthenticated = (req, res, next) => {
 };
 
 router
-  .use(bodyParser.json())
-  .get("/students", async (req, res) => {
-    res.send(db.getStudents());
-  })
+  .use(bodyParser.json());
 
+router.get("/students", async (req, res) => {
+    res.send(db.getStudents());
+  });
+
+router
   .get("/schedule", async (req, res) => res.send(db.getSchedule()))
   .post("/schedule", ensureAuthenticated, async (req, res) => {
-    db.setSchedule(req.body);
-    res.send(req.body);
+    if (req.user.admin) {
+        db.setSchedule(req.body);
+        res.send(req.body);
+    } else {
+        res.status(405).send({
+            error: "Method Not Allowed"
+        });
+    }
+
   })
 
   .get("/profile", ensureAuthenticated, async (req, res) => {
