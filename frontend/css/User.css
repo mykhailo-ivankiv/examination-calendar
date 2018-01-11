@@ -12,3 +12,9 @@
     background: #cccccc;
     border-radius: 100%;
 }
+
+.User__button {
+    position: absolute;
+    right: 37px;
+    top: 7px;
+}
