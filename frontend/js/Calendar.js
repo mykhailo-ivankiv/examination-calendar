@@ -23,7 +23,7 @@ class Calendar extends Component {
 
     const interval = Interval.fromDateTimes(from, to).splitBy({ days: 1 });
     this.state = {
-      edit: false,
+      edit: true,
       from,
       to,
       interval,

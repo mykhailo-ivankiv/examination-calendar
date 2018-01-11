@@ -7,37 +7,32 @@ const b = block("User");
 class User extends Component {
   constructor(props) {
     super(props);
-    const {code, access_token} = api;
-    if (access_token) { this.getUser(); }
 
-    this.state = {
-        code
-    };
+    this.state = {};
+    this.getProfile();
   }
 
-  async getUser() {
-    const user = await api.getUser();
-    this.setState({ user });
+  async getProfile() {
+    const profile = await api.getProfile();
+    this.setState({ profile });
   }
 
-  renderLoginLink = () =>
-    <a href={`/auth/github`}>
-        Увійти через Github
-    </a>
+  renderLoginLink = () => <a href={`/auth/github`}>Увійти через Github</a>;
 
   render() {
-    const {code, access_token} = api;
-    const {user} = this.state;
-
-    if (!code && !access_token) {
-        return <div className={b()}>{this.renderLoginLink()}</div>
+    const { profile } = this.state;
+    console.log(profile);
+    if (!profile) {
+      return "";
+    } else if (profile.error) {
+      return <div className={b()}>{this.renderLoginLink()}</div>;
+    } else {
+      return (
+        <div className={b()}>
+          {profile && <img className={b("avatar")} src={profile._json.avatar_url} />}
+        </div>
+      );
     }
-
-    return (
-      <div className={b()}>
-          {user && <img className={b("avatar")} src={user.avatar_url} />}
-      </div>
-    );
   }
 }
 

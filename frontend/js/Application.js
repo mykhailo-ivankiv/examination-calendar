@@ -17,7 +17,7 @@ class Application extends Component {
         return (
             <section className="Application">
                 <h2>Розклад іспиту з Курсу веб-розробки</h2>
-                {/*<User/>*/}
+                <User/>
                 <Calendar/>
             </section>
         )
